@@ -1,27 +1,26 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
-import { AuthContext } from '../contexts/AuthContext'
-import Logout from './Logout'
+import React from "react";
+import { Link } from "react-router-dom";
+import "./NavBar.css"; // Import the CSS file
 
 const NavBar = () => {
-  const { currentUser } = useContext(AuthContext)
-
   return (
-    <nav>
-      <Link to="/">Home</Link>
-      {!currentUser ? (
-        <>
-          <Link to="/login" style={{ marginLeft: 10 }}>Login</Link>
-          <Link to="/register" style={{ marginLeft: 10 }}>Register</Link>
-        </>
-      ) : (
-        <>
-          <span style={{ marginLeft: 10 }}>Welcome, {currentUser.email}</span>
-          <Logout />
-        </>
-      )}
+    <nav className="navbar">
+      <div className="navbar-logo">
+        <Link to="/">My E-Commerce</Link>
+      </div>
+      <ul className="navbar-links">
+        <li>
+          <Link to="/login" className="nav-link">Login</Link>
+        </li>
+        <li>
+          <Link to="/register" className="nav-link">Register</Link>
+        </li>
+        <li>
+          <Link to="/cart" className="nav-link">Cart</Link>
+        </li>
+      </ul>
     </nav>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;
