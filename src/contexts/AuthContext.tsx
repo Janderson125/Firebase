@@ -1,36 +1,26 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { getAuth, onAuthStateChanged, User, signOut } from 'firebase/auth';
+import React, { createContext, useState, useEffect, ReactNode } from 'react'
+import { User } from 'firebase/auth'
+import { onAuthStateChangedListener } from '../firebaseAuth'
 
-const auth = getAuth();
-
-interface AuthContextType {
-  user: User | null;
-  logout: () => Promise<void>;
+interface AuthContextProps {
+  currentUser: User | null
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextProps>({ currentUser: null })
 
-export const AuthProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [currentUser, setCurrentUser] = useState<User | null>(null)
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  const logout = () => signOut(auth);
+    const unsubscribe = onAuthStateChangedListener(user => {
+      setCurrentUser(user)
+    })
+    return unsubscribe
+  }, [])
 
   return (
-    <AuthContext.Provider value={{ user, logout }}>
+    <AuthContext.Provider value={{ currentUser }}>
       {children}
     </AuthContext.Provider>
-  );
-};
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) throw new Error('useAuth must be used within AuthProvider');
-  return context;
-};
+  )
+}

@@ -1,32 +1,45 @@
-// src/components/Login.js
-import React, { useState } from 'react';
-import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import React, { useState, useContext } from 'react'
+import { loginUser } from '../firebaseAuth'
+import { AuthContext } from '../contexts/AuthContext'
 
-function Login() {
-  const auth = getAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Login = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const { currentUser } = useContext(AuthContext)
 
-  const handleLogin = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await loginUser(email, password)
+      alert('Login successful!')
+      setEmail('')
+      setPassword('')
     } catch (error) {
-      console.error(error);
+      alert('Error logging in: ' + (error as Error).message)
     }
-  };
+  }
 
-  const handleLogout = () => {
-    signOut(auth);
-  };
+  if (currentUser) return <p>Welcome, {currentUser.email}</p>
 
   return (
-    <div>
-      <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-      <button onClick={handleLogin}>Login</button>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
-  );
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        required
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+        required
+      />
+      <button type="submit">Login</button>
+    </form>
+  )
 }
 
-export default Login;
+export default Login

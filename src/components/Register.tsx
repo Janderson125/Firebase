@@ -1,29 +1,41 @@
-// src/components/Register.js
-import React, { useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import React, { useState } from 'react'
+import { registerUser } from '../firebaseAuth'
 
-function Register() {
-  const auth = getAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Register = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const handleRegister = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      // User registered successfully
-      // Optionally, add user data to Firestore here
+      await registerUser(email, password)
+      alert('Registration successful! You can now log in.')
+      setEmail('')
+      setPassword('')
     } catch (error) {
-      console.error(error);
+      alert('Error registering: ' + (error as Error).message)
     }
-  };
+  }
 
   return (
-    <div>
-      <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-      <button onClick={handleRegister}>Register</button>
-    </div>
-  );
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        required
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+        required
+      />
+      <button type="submit">Register</button>
+    </form>
+  )
 }
 
-export default Register;
+export default Register

@@ -1,14 +1,15 @@
-// src/firebase.js
-import { initializeApp } from 'firebase/app';
+// src/firebase.ts
+import { initializeApp } from 'firebase/app'
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
+  apiKey: "AIzaSyA0MOP3yXkQy5_mRMSEpIl4Wbz0lu1duEQ",
+  authDomain: "ecommerce-api-e42c7.firebaseapp.com",
+  projectId: "ecommerce-api-e42c7",
+  storageBucket: "ecommerce-api-e42c7.appspot.com",
+  messagingSenderId: "700782827478",
+  appId: "1:700782827478:web:46ea2c0c33893ed6f43677"
+}
 
-const app = initializeApp(firebaseConfig);
-export default app;
+const app = initializeApp(firebaseConfig)
+
+export default app
