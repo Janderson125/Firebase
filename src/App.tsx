@@ -1,28 +1,21 @@
-import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import NavBar from './components/NavBar'
-import TaskDashboard from './components/TaskDashboard'
-import TaskDetail from './components/TaskDetail'
-import TaskForm from './components/TaskForm'
-import Login from './components/Login'
-import Register from './components/Register'
-import { TaskProvider } from './contexts/TaskContext'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import NavBar from "./components/NavBar";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 function App() {
   return (
-    <TaskProvider>
-      <Router>
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<TaskDashboard />} />
-          <Route path="/tasks/new" element={<TaskForm />} />
-          <Route path="/tasks/:id" element={<TaskDetail />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </Router>
-    </TaskProvider>
-  )
+    <Router>
+      <NavBar />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        {/* You can add a home route or others here */}
+        <Route path="/" element={<div>Welcome to your app!</div>} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
