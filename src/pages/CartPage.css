@@ -1,0 +1,19 @@
+/* src/pages/CartPage.css */
+.cart-container {
+  padding: 20px;
+}
+
+.cart-list li {
+  margin-bottom: 8px;
+}
+
+.cart-total {
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+.place-order-btn {
+  margin-top: 12px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
